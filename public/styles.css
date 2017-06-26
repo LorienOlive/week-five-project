@@ -1,0 +1,11 @@
+ul {
+  list-style: none;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.list-item {
+  border-bottom: solid 1px black;
+  padding: 1.5vw;
+  margin: 1vw
+}
