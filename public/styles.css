@@ -1,4 +1,10 @@
-ul {
+#blanks {
+  list-style: none;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#lettersGuessed {
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
@@ -6,6 +12,11 @@ ul {
 
 .list-item {
   border-bottom: solid 1px black;
+  padding: 1.5vw;
+  margin: 1vw
+}
+
+.guessedLetter {
   padding: 1.5vw;
   margin: 1vw
 }

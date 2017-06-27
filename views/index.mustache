@@ -6,11 +6,26 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <h1>Mystery Word</h1>
+    {{#counter}}
+    {{#.}}
+    <h3>You have {{.}} turns left</h3>
+    {{/.}}
+    {{/counter}}
+    {{^counter}}
+    <h3>You are out of guesses</h3>
+    {{/counter}}
     <div class="main-wrapper">
       <form action="/" method="post" class="letter-picker">
         <input type="text" name="guessLetter" id="guessInput" placeholder="Please Enter a Letter" value="">
-        <input type="submit" name="guessLetter" id="guessButton" value="Submit Letter"></button>
       </form>
+      <div class="notification">
+        {{#notification}}
+        {{#.}}
+        <h2>{{.}}</h2>
+        {{/.}}
+        {{/notification}}
+      </div>
       <ul id="blanks">
         {{#blanks}}
           {{#.}}
@@ -18,14 +33,16 @@
           {{/.}}
         {{/blanks}}
       </ul>
-      <ul id="matchedGuesses">
-        {{#matches}}
-          {{#.}}
-          <li class="list-item">{{.}}</li>
-          {{/.}}
-          {{/matches}}
-      </ul>
-      </form>
+      <div class="guesses">
+        <h3>Letters Guessed:</h3>
+        <ul id="lettersGuessed">
+          {{#lettersGuessed}}
+            {{#.}}
+            <li class="guessedLetter">{{.}}, </li>
+            {{/.}}
+          {{/lettersGuessed}}
+        </ul>
+      </div>
     </div>
   </body>
 </html>
