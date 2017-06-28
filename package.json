@@ -16,7 +16,6 @@
     "express-validator": "^3.2.0",
     "lorem-ipsum": "^1.0.4",
     "mustache": "^2.3.0",
-    "mustache-express": "^1.2.4",
-    "random-word-by-length": "^0.1.0"
+    "mustache-express": "^1.2.4"
   }
 }

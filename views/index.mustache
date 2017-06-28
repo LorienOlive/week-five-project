@@ -8,15 +8,13 @@
   <body>
     <h1>Mystery Word</h1>
     <h3>Choose a Mode</h3>
-      <form action="/" method="post" class="modePicker">
-        <input type="radio" id="easymode" name="easymode" value="easymode">
-        <label for="Easy Mode">Easy Mode</label>
-
-        <input type="radio" id="hardmode" name="hardmode" value="hardmode">
-        <label for="hardmode">Hard Mode</label>
-
-        <input type="radio" id="crazymode" name="crazymode" value="crazymode">
-        <label for="crazymode">Crazy Mode</label>
-      </form>
+    <form action="/" method="post" class="modepicker">
+      <select name="mode">
+        <option value="default">Choose Mode</option>
+        <option value="easy-mode">Easy Mode</option>
+        <option value="hard-mode">Hard Mode</option>
+        <option value="crazy-mode">Crazy Mode</option>
+      </select>
+    <form>
   </body>
 </html>

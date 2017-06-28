@@ -26,7 +26,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-//Generator Selects Random 4-8 Letter Word from Dictionary.//
+//Generator Selects Random Word from Dictionary.//
 //Generate the same number of blanks as the length of the word.//
 
 var random = Math.random;
@@ -127,7 +127,6 @@ function result(blanks) {
     if (counter == 0 && blanks[i] == " ") {
       notification = "Game Over";
       return notification;
-      console.log(blanks);
     } else if (finalWord === origWord) {
       notification = "Congratulations! You Win!";
       return notification;
@@ -139,21 +138,11 @@ app.get('/', function(req, res) {
     res.render('index')
 })
 
-app.post('/', function (req, res) {
-  var modeSelect = req.body.mode;
-  console.log(modeSelect);
-  if (modeSelect == "easymode") {
-    easyMode(words);
-    res.redirect('/playgame');
-  } else if (modeSelect == "hardmode") {
-    hardMode();
-    res.render('/playgame');
-  } else if (modeSelect == "crazymode"){
-    crazyMode();
-    res.render('/playgame');
-  }
+app.post("/", function (req, res) {
+  var mode = req.body.mode;
+  console.log(mode);
+  res.render('/playgame')
 })
-
 
 app.get('/playgame', function (req, res) {
   blanks;
@@ -161,8 +150,17 @@ app.get('/playgame', function (req, res) {
   lettersGuessed = [];
   counter = 10;
   notification = false;
+  if (mode == "easymode") {
+    easyMode(words);
+  } else if (mode == "hardmode") {
+    hardMode(words);
+  } else if (mode == "crazymode"){
+    crazyMode(words);
+  }
   res.render('playgame', {blanks: blanks, counter: counter});
 })
+
+app.post()
 
 app.post("/playgame", function (req, res) {
   var inputItem = req.body.guessLetter;
