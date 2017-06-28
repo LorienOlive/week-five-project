@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const mustacheExpress = require('mustache-express');
 const fs = require('fs');
-const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
+const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toUpperCase().split("\n");
 
 
 const app = express();
@@ -33,53 +33,87 @@ var random = Math.random;
 var blanks = [];
 var secretWord = [];
 var word;
+var counter = 10;
 
 var randomInteger = function(min, max) {
   return Math.floor(random() * (max - min + 1) + min);
 };
 
-var randomWord = function(words) {
-  blanks = [];
+var easyMode = function(words) {
   word = words[randomInteger(0, words.length - 1)];
   var validWord = word.split("");
   var wordLength = validWord.length;
   if (wordLength >= 4 && wordLength <= 6) {
     for (var i = 0; i < wordLength; i++) {
         blanks.push(" ");
-        secretWord.push(validWord[i]);
+        secretWord.push(validWord[i].toUpperCase());
     }
   } else {
-    return randomWord(words);
+    return easyMode(words);
   }
   return secretWord;
 };
 
+var hardMode = function(words) {
+  word = words[randomInteger(0, words.length - 1)];
+  var validWord = word.split("");
+  var wordLength = validWord.length;
+  if (wordLength >= 7 && wordLength <= 9) {
+    for (var i = 0; i < wordLength; i++) {
+        blanks.push(" ");
+        secretWord.push(validWord[i].toUpperCase());
+    }
+  } else {
+    return hardMode(words);
+  }
+  return secretWord;
+  counter = 12;
+};
 
-app.get('/', function (req, res) {
-  lettersGuessed = [];
-  blanks = [];
-  secretWord = [];
-  counter = 10;
-  console.log(randomWord(words));
-  res.render('index', {blanks: blanks});
-})
+var crazyMode = function(words) {
+  word = words[randomInteger(0, words.length - 1)];
+  var validWord = word.split("");
+  var wordLength = validWord.length;
+  if (wordLength >= 10 && wordLength <= 12) {
+    for (var i = 0; i < wordLength; i++) {
+        blanks.push(" ");
+        secretWord.push(validWord[i].toUpperCase());
+    }
+  } else {
+    return crazyMode(words);
+  }
+  return secretWord;
+  counter = 14
+};
 
 //Match guesses against letters in the selected word//
 
 var guess;
 var lettersGuessed = [];
-var counter = 10;
 var finalWord;
 
 function match(guess) {
   for (let i = 0; i < secretWord.length; i++) {
     if (secretWord[i] === guess) {
       blanks[i] = guess;
-    }
   }
   lettersGuessed.push(guess);
   counter--;
   return blanks;
+  }
+
+}
+
+//Function to assure that player does not repeat letters//
+
+function repeat() {
+  var sortLettersGuessed = lettersGuessed.slice().sort();
+  for (let i = 0; i < lettersGuessed.length; i++) {
+    if (sortLettersGuessed[i - 1] == sortLettersGuessed[i]) {
+      lettersGuessed.pop(sortLettersGuessed[i]);
+      counter++;
+    }
+  }
 }
 
 //Test to see if the player has won or lost//
@@ -93,6 +127,7 @@ function result(blanks) {
     if (counter == 0 && blanks[i] == " ") {
       notification = "Game Over";
       return notification;
+      console.log(blanks);
     } else if (finalWord === origWord) {
       notification = "Congratulations! You Win!";
       return notification;
@@ -100,20 +135,56 @@ function result(blanks) {
   }
 }
 
-app.post("/", function (req, res) {
+app.get('/', function(req, res) {
+    res.render('index')
+})
+
+app.post('/', function (req, res) {
+  var modeSelect = req.body.mode;
+  console.log(modeSelect);
+  if (modeSelect == "easymode") {
+    easyMode(words);
+    res.redirect('/playgame');
+  } else if (modeSelect == "hardmode") {
+    hardMode();
+    res.render('/playgame');
+  } else if (modeSelect == "crazymode"){
+    crazyMode();
+    res.render('/playgame');
+  }
+})
+
+
+app.get('/playgame', function (req, res) {
+  blanks;
+  secretWord = [];
+  lettersGuessed = [];
+  counter = 10;
+  notification = false;
+  res.render('playgame', {blanks: blanks, counter: counter});
+})
+
+app.post("/playgame", function (req, res) {
   var inputItem = req.body.guessLetter;
   req.checkBody("guessLetter", "Invalid Entry, Try Again.").notEmpty().len(1).isAlpha();
   var errors = req.validationErrors();
   if (errors) {
     res.status(500).send("Invalid Entry, Try Again.")
   } else if (counter > 0) {
-    guess = inputItem[0] + "";
+    guess = inputItem[0].toUpperCase();
     match(guess);
+    repeat();
     result(blanks);
-    res.render('index', {blanks: blanks, lettersGuessed: lettersGuessed, counter: counter, notification: notification});
+    res.render('playgame', {blanks: blanks, lettersGuessed: lettersGuessed, counter: counter, notification: notification});
   }
 });
 
+//Create button that allows you to start a new game//
+
+app.post("/newgame", function (req, res) {
+  var newGameButton = req.body.newGame;
+  res.redirect('/');
+})
 
 app.listen(3000, function(){
   console.log("Successfully started express application!")

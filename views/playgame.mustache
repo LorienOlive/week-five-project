@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mystery Word</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>Mystery Word</h1>
+    {{#counter}}
+    {{#.}}
+    <h3>You have {{.}} turns left</h3>
+    {{/.}}
+    {{/counter}}
+    {{^counter}}
+    <h3>You are out of guesses</h3>
+    {{/counter}}
+    <div class="main-wrapper">
+      <form action="/" method="post" class="letter-picker">
+        <input type="text" name="guessLetter" id="guessInput" placeholder="Please Enter a Letter" value="">
+      </form>
+      <div class="notification">
+        {{#notification}}
+        {{#.}}
+        <h2>{{.}}</h2>
+        <form action="/newgame" method="post" class="reset">
+          <button type="submit" name="newGame" id="newGame" value="">New Game?</button>
+        </form>
+        {{/.}}
+        {{/notification}}
+        {{^notification}}
+        <h2></h2>
+        {{/notification}}
+      </div>
+      <ul id="blanks">
+        {{#blanks}}
+          {{#.}}
+          <li class="list-item">{{.}}</li>
+          {{/.}}
+        {{/blanks}}
+      </ul>
+      <div class="guesses">
+        <h3>Letters Guessed:</h3>
+        <ul id="lettersGuessed">
+          {{#lettersGuessed}}
+            {{#.}}
+            <li class="guessedLetter">{{.}}, </li>
+            {{/.}}
+          {{/lettersGuessed}}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
