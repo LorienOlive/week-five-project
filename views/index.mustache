@@ -4,17 +4,21 @@
     <meta charset="utf-8">
     <title>Mystery Word</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Ultra" rel="stylesheet">
   </head>
   <body>
-    <h1>Mystery Word</h1>
-    <h3>Choose a Mode</h3>
-    <form action="/" method="post" class="modepicker">
-      <select name="mode">
-        <option value="default">Choose Mode</option>
-        <option value="easy-mode">Easy Mode</option>
-        <option value="hard-mode">Hard Mode</option>
-        <option value="crazy-mode">Crazy Mode</option>
-      </select>
-    <form>
+    <div class="body-wrapper">
+      <h1>Mystery Word</h1>
+      <h3>Choose a Mode</h3>
+      <form action="/" method="post" class="modepicker">
+        <select name="mode">
+          <option value="default">Choose Mode</option>
+          <option value="easy-mode">Easy Mode</option>
+          <option value="hard-mode">Hard Mode</option>
+          <option value="crazy-mode">Crazy Mode</option>
+        </select>
+        <button type="submit">Submit</button>
+      <form>
+    </div>
   </body>
 </html>

@@ -7,7 +7,6 @@ const mustacheExpress = require('mustache-express');
 const fs = require('fs');
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toUpperCase().split("\n");
 
-
 const app = express();
 
 app.engine('mustache', mustacheExpress());
@@ -26,14 +25,27 @@ app.use(session({
   saveUninitialized: true
 }));
 
-//Generator Selects Random Word from Dictionary.//
+//Function to Select Mode//
+var modeSet;
+
+function getMode(modeSet) {
+  if(modeSet === "easy-mode") {
+    easyMode(words);
+  } else if (modeSet === "hard-mode") {
+    hardMode(words);
+  } else if (modeSet === "crazy-mode") {
+    crazyMode(words);
+  }
+}
+
+//Generator Selects Random 4-6 Letter Word from Dictionary.//
 //Generate the same number of blanks as the length of the word.//
 
 var random = Math.random;
 var blanks = [];
 var secretWord = [];
 var word;
-var counter = 10;
+var counter;
 
 var randomInteger = function(min, max) {
   return Math.floor(random() * (max - min + 1) + min);
@@ -51,10 +63,10 @@ var easyMode = function(words) {
   } else {
     return easyMode(words);
   }
-  return secretWord;
 };
 
 var hardMode = function(words) {
+  counter = 12;
   word = words[randomInteger(0, words.length - 1)];
   var validWord = word.split("");
   var wordLength = validWord.length;
@@ -66,11 +78,10 @@ var hardMode = function(words) {
   } else {
     return hardMode(words);
   }
-  return secretWord;
-  counter = 12;
 };
 
 var crazyMode = function(words) {
+  counter = 14
   word = words[randomInteger(0, words.length - 1)];
   var validWord = word.split("");
   var wordLength = validWord.length;
@@ -82,8 +93,6 @@ var crazyMode = function(words) {
   } else {
     return crazyMode(words);
   }
-  return secretWord;
-  counter = 14
 };
 
 //Match guesses against letters in the selected word//
@@ -96,12 +105,11 @@ function match(guess) {
   for (let i = 0; i < secretWord.length; i++) {
     if (secretWord[i] === guess) {
       blanks[i] = guess;
+    }
   }
   lettersGuessed.push(guess);
   counter--;
   return blanks;
-  }
-
 }
 
 //Function to assure that player does not repeat letters//
@@ -125,7 +133,7 @@ function result(blanks) {
   var origWord = secretWord.join(",")
   for (let i = 0; i < blanks.length; i++) {
     if (counter == 0 && blanks[i] == " ") {
-      notification = "Game Over";
+      notification = "Game Over! You Lose.";
       return notification;
     } else if (finalWord === origWord) {
       notification = "Congratulations! You Win!";
@@ -134,33 +142,27 @@ function result(blanks) {
   }
 }
 
+//Routing Code//
+
 app.get('/', function(req, res) {
-    res.render('index')
+  res.render('index');
 })
 
-app.post("/", function (req, res) {
+app.post('/', function (req, res) {
   var mode = req.body.mode;
-  console.log(mode);
-  res.render('/playgame')
+  modeSet = mode;
+  res.redirect('/playgame');
 })
 
 app.get('/playgame', function (req, res) {
-  blanks;
+  blanks = [];
   secretWord = [];
   lettersGuessed = [];
-  counter = 10;
   notification = false;
-  if (mode == "easymode") {
-    easyMode(words);
-  } else if (mode == "hardmode") {
-    hardMode(words);
-  } else if (mode == "crazymode"){
-    crazyMode(words);
-  }
-  res.render('playgame', {blanks: blanks, counter: counter});
+  counter = 10;
+  getMode(modeSet);
+  res.render('playgame', {blanks: blanks, counter: counter, notification: notification});
 })
-
-app.post()
 
 app.post("/playgame", function (req, res) {
   var inputItem = req.body.guessLetter;

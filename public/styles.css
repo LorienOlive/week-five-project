@@ -1,3 +1,31 @@
+@font-face {
+  font-family: 'Ultra', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.body-wrapper {
+  background: url("images/background_home_cropped.jpg") center no-repeat;
+  background-size: cover;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  margin: 0vw;
+  padding: 0vw;
+}
+
+h1 {
+  font-family: 'Ultra', serif;
+  font-size: 10vw;
+  color: #d5481d;
+  -webkit-text-stroke-width: .1px;
+  -webkit-text-stroke-color: #02807e;
+  margin-left: 7vw;
+}
+
 #blanks {
   list-style: none;
   display: flex;
