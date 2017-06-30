@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Ultra', serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 * {
@@ -8,43 +9,179 @@
 }
 
 .body-wrapper {
-  background: url("images/background_home_cropped.jpg") center no-repeat;
+  background: url("images/background2.png") center no-repeat;
+  background-color: #1a8a73;
   background-size: cover;
   position: fixed;
+  text-align: center;
   width: 100vw;
   height: 100vh;
   margin: 0vw;
   padding: 0vw;
 }
 
-h1 {
+.index-header {
   font-family: 'Ultra', serif;
   font-size: 10vw;
-  color: #d5481d;
-  -webkit-text-stroke-width: .1px;
-  -webkit-text-stroke-color: #02807e;
-  margin-left: 7vw;
+  font-weight: 400;
+  color: #37fcd0;
+  /*text-shadow: 9px 9px 9px rgba(22, 21, 4, 0.6);*/
+  /*-webkit-text-stroke-width: .1px;
+  -webkit-text-stroke-color: #7cbd93;*/
+  margin-top: 30vw;
+  position: relative;
+  z-index: 1;
+}
+
+.playgame-header {
+  font-family: 'Ultra', serif;
+  font-size: 10vw;
+  font-weight: 400;
+  color: #37fcd0;
+  /*text-shadow: 9px 9px 9px rgba(22, 21, 4, 0.6);*/
+  /*-webkit-text-stroke-width: .1px;
+  -webkit-text-stroke-color: #7cbd93;*/
+  margin-top: 30vw;
+  position: relative;
+  z-index: 1;
+}
+
+.modepicker {
+  background-color: rgba(22, 21, 4, 0.6);
+  width: 100vw;
+  height: 40vw;
+  margin-top: -8.2vw;
+}
+
+.game-wrapper {
+  background-color: rgba(22, 21, 4, 0.6);
+  width: 100vw;
+  height: 40vw;
+  margin-top: -8.2vw;
+  position: fixed;
+  z-index: 0;
+}
+
+.mode {
+   font-family: 'Open Sans', sans-serif;
+   color: #37fcd0;
+   font-size: 1.75vw;
+   background-image: url("http://i62.tinypic.com/15xvbd5.png"), -webkit-linear-gradient(#779126, #779126 40%, #779126) no-repeat;
+   background-color: #256663;
+   width: 20vw;
+   height: 3.5vw;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+   border: none;
+   box-shadow: 4px 4px 6px rgba(22, 21, 4, 0.6);
+   outline: none;
+   margin-top: 10vw;
+}
+
+.button {
+  font-family: 'Open Sans', sans-serif;
+  color: #37fcd0;
+  font-size: 1.75vw;
+  background-color: #256663;
+  width: 5vw;
+  height: 3.5vw;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 6px rgba(22, 21, 4, 0.6);
 }
 
 #blanks {
+  background: #256663;
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-around;
+  border-radius: 5px;
+  margin: -9vw 6vw 0vw 40vw;
+  position: relative;
+  z-index: 0;
 }
 
 #lettersGuessed {
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: start;
+  margin-left: 5vw;
+}
+
+.guessedLetter {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 3vw;
+  color: #ff8443;
+  text-shadow: 9px 9px 9px rgba(22, 21, 4, 0.6);
+  margin: 0vw;
+  padding: 0vw;
 }
 
 .list-item {
-  border-bottom: solid 1px black;
-  padding: 1.5vw;
-  margin: 1vw
+  font-family: 'Open Sans', sans-serif;
+  font-size: 5vw;
+  color: #37fcd0;
+  width: 5vw;
+  height: 6vw;
+  border-bottom: solid 3px #37fcd0;
+  padding-bottom: 1vw;
+  margin: 1vw;
+  position: relative;
+  z-index: 0;
 }
 
 .guessedLetter {
   padding: 1.5vw;
   margin: 1vw
+}
+
+.letter-picker {
+  margin-right: 80vw;
+  margin-top: 8vw;
+}
+
+#guessInput {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 5vw;
+  color: #ff8443;
+  background: #be2f1e;
+  border: none;
+  width: 7vw;
+  height: 9vw;
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  position: relative;
+  z-index: 2;
+}
+
+.notification {
+  position: absolute;
+  z-index: 3;
+  text-align: center;
+  margin-left: 10vw;
+  margin-top: 3vw;
+}
+
+h2 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 8vw;
+  color: #e6e9d2;
+  /*text-shadow: 9px 9px 9px rgba(22, 21, 4, 0.6);*/
+}
+
+#newGame {
+  font-family: 'Open Sans', sans-serif;
+  color: #e6e9d2;
+  font-size: 2vw;
+  background-color: #be2f1e;
+  width: 14vw;
+  height: 6vw;
+  border-radius: 5px;
+  border: none;
+  /*box-shadow: 4px 4px 6px rgba(22, 21, 4, 0.6);*/
+  outline: none;
 }

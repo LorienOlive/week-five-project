@@ -46,6 +46,7 @@ var blanks = [];
 var secretWord = [];
 var word;
 var counter;
+var validWord;
 
 var randomInteger = function(min, max) {
   return Math.floor(random() * (max - min + 1) + min);
@@ -53,7 +54,7 @@ var randomInteger = function(min, max) {
 
 var easyMode = function(words) {
   word = words[randomInteger(0, words.length - 1)];
-  var validWord = word.split("");
+  validWord = word.split("");
   var wordLength = validWord.length;
   if (wordLength >= 4 && wordLength <= 6) {
     for (var i = 0; i < wordLength; i++) {
@@ -134,9 +135,10 @@ function result(blanks) {
   for (let i = 0; i < blanks.length; i++) {
     if (counter == 0 && blanks[i] == " ") {
       notification = "Game Over! You Lose.";
+      blanks = secretWord;
       return notification;
     } else if (finalWord === origWord) {
-      notification = "Congratulations! You Win!";
+      notification = "Congrats! You Win!";
       return notification;
     }
   }
@@ -161,6 +163,7 @@ app.get('/playgame', function (req, res) {
   notification = false;
   counter = 10;
   getMode(modeSet);
+  console.log(secretWord);
   res.render('playgame', {blanks: blanks, counter: counter, notification: notification});
 })
 
